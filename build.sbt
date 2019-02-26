@@ -12,6 +12,7 @@ scalaVersion := "2.12.8"
 
 libraryDependencies ++= Seq(
   guice,
+  jdbc,
 //  filters,
   "com.typesafe.play" %% "play-slick" % "4.0.0",
   "com.typesafe.play" %% "play-slick-evolutions" % "4.0.0",

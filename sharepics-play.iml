@@ -22,6 +22,10 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sbt: aopalliance:aopalliance:1.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: tyrex:tyrex:1.0.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.zaxxer:HikariCP:3.3.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-jdbc_2.12:2.7.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.googlecode.usc:jdbcdslog:1.0.6.2:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe.play:play-slick-evolutions_2.12:4.0.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe.play:play-jdbc-evolutions_2.12:2.7.0:jar" level="project" />
     <orderEntry type="library" name="sbt: ch.qos.logback:logback-classic:1.2.3:jar" level="project" />
@@ -166,7 +170,6 @@
     <orderEntry type="library" name="sbt: com.typesafe.play:play-slick_2.12:4.0.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe.slick:slick-hikaricp_2.12:3.3.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe.slick:slick_2.12:3.3.0:jar" level="project" />
-    <orderEntry type="library" name="sbt: com.zaxxer:HikariCP:3.2.0:jar" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="sbt: org.scala-lang:scala-compiler:2.12.8:jar" level="project" />
   </component>
 </module>
