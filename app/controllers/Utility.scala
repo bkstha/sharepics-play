@@ -11,7 +11,8 @@ import models.domain.{Image, ImageTag, Tag}
 
 
 object Utility {
-  val TEMP_FOLDER: String = "tmp/pictures"
+  val TEMP_FOLDER: String = "tmp"
+  val TEMP_FOLDER_PICTURE: String = "tmp/pictures"
   val FILE_STORAGE_FOLDER: String = "public/pictures"
   val FULL: String = "full"
   val LOW: String = "low"
