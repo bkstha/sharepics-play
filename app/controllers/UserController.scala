@@ -1,9 +1,12 @@
 package controllers
 
-import controllers.requests.UserRequest
+import java.nio.file.Paths
+import java.util.UUID
+
+import controllers.requests.{ImageRequest, UserRequest}
+import controllers.responses.ImageUploadResponse
 import javax.inject._
-import models.database.repositories.UserRepository
-import models.services.UserService
+import models.services.{ImageService, UserService}
 import play.api.Logger
 import play.api.mvc._
 import play.api.data._
@@ -16,7 +19,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class UserController @Inject()(
                                 controllerComponents: ControllerComponents,
                                 userService: UserService,
-                                userRepo: UserRepository
+                                imageService: ImageService,
                               )(implicit executionContext: ExecutionContext) extends AbstractController(controllerComponents) {
   private val logger = Logger(getClass)
 
@@ -28,6 +31,15 @@ class UserController @Inject()(
     )(UserRequest.apply)(UserRequest.unapply)
   )
 
+  val imageForm = Form(
+    mapping(
+      "id" -> text,
+      "userId" -> text,
+      "title" -> text,
+      "tags" -> seq(text)
+    )(ImageRequest.apply)(ImageRequest.unapply)
+  )
+
   def login = Action.async(parse.json) { implicit request =>
     logger.trace("process: ")
     userForm.bindFromRequest.fold(
@@ -37,6 +49,34 @@ class UserController @Inject()(
       userRequest => {
         userService.addUser(userRequest).map {
           user => Ok(Json.toJson(user))
+        }
+      }
+    )
+  }
+
+  def upload = Action(parse.multipartFormData) { request =>
+    request.body.file("image").map { picture =>
+      Utility.createTempFolder()
+      val imageId = UUID.randomUUID().toString
+      val rootPath = play.Environment.simple().rootPath()
+      val tempFolder = Utility.TEMP_FOLDER
+      picture.ref.copyTo(Paths.get(s"$rootPath/$tempFolder/$imageId.jpg"), replace = true)
+
+      Ok(Json.toJson(new ImageUploadResponse(imageId, picture.fileSize)))
+    }.getOrElse {
+      BadRequest("error")
+    }
+  }
+
+  def saveImage = Action.async(parse.json) { implicit request =>
+    logger.trace("saving image: ")
+    imageForm.bindFromRequest.fold(
+      errorForm => {
+        Future.successful(BadRequest("Error saving Image"))
+      },
+      imageRequest => {
+        imageService.saveImage(imageRequest).map {
+          response => Ok(Json.toJson(response))
         }
       }
     )

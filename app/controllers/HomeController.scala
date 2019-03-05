@@ -2,6 +2,7 @@ package controllers
 
 import javax.inject._
 import models.database.repositories.UserRepository
+import models.repositories.{ImageRepository, ImageTagRepository, TagRepository}
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.i18n.I18nSupport
 import play.api.libs.json.Json.toJson
@@ -17,7 +18,10 @@ import scala.concurrent.ExecutionContext
 class HomeController @Inject()(
                                 dbConfigProvider: DatabaseConfigProvider,
                                 cc: ControllerComponents,
-                                userRepo: UserRepository
+                                userRepo: UserRepository,
+                                tagRepo: TagRepository,
+                                imageTagRepo: ImageTagRepository,
+                                imageRepo: ImageRepository
                               )(implicit executionContext: ExecutionContext) extends AbstractController(cc) with I18nSupport {
 
 
@@ -35,5 +39,15 @@ class HomeController @Inject()(
 
   def getUserList = Action.async {
     userRepo.list().map(records => Ok(toJson(records)).as("text/json"))
+  }
+
+  def getImageList = Action.async {
+    imageRepo.list().map(records => Ok(toJson(records)).as("text/json"))
+  }
+  def getTagList = Action.async {
+    tagRepo.list().map(records => Ok(toJson(records)).as("text/json"))
+  }
+  def getImageTagList = Action.async {
+    imageTagRepo.list().map(records => Ok(toJson(records)).as("text/json"))
   }
 }

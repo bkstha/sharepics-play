@@ -4,6 +4,7 @@ import java.sql.Timestamp
 import java.util.{Date, UUID}
 
 import constants.UserType
+import controllers.Utility
 import controllers.requests.UserRequest
 import controllers.responses.UserResponse
 import javax.inject.{Inject, Singleton}

@@ -5,13 +5,11 @@ import java.sql.Timestamp
 import constants.UserType
 import constants.UserType.UserType
 import models.domain.User
-
+import slick.jdbc.PostgresProfile.api._
 
 private[models] trait UserTable {
 
   protected val driver: slick.jdbc.JdbcProfile
-
-  import driver.api._
 
   protected val users = TableQuery[Users]
 
@@ -25,7 +23,7 @@ private[models] trait UserTable {
     */
   private[models] class Users(tag: Tag) extends Table[User](tag, "USERS") {
 
-    def id: Rep[String] = column[String]("id", O.PrimaryKey, O.Length(15))
+    def id: Rep[String] = column[String]("id", O.PrimaryKey, O.Length(36))
 
     def email: Rep[String] = column[String]("email", O.Length(100))
 

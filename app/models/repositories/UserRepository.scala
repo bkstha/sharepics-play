@@ -46,10 +46,6 @@ class UserRepository @Inject()(val dbConfigProvider: DatabaseConfigProvider)
 
   def list(): Future[Seq[User]] = db.run(users.result)
 
-//  /** Insert a new user */
-//  def insert(user: User): Future[Unit] =
-//    db.run(users += user).map(_ => ())
-
   /** Insert a new user */
   def insert(user: User): Future[User] =
     db.run(users returning users.map(_.id) into ((user,id) => user.copy(id=Some(id))) += user)
